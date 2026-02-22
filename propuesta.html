@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Quieres estar conmigo?</title>
+
+<style>
+    body{
+        margin:0;
+        padding:0;
+        overflow:hidden;
+        font-family:'Segoe UI', sans-serif;
+        background: linear-gradient(to bottom, #ff5fa2, #ffc3e6);
+    }
+
+    /* Fondo lluvia */
+    #rain-container{
+        position:fixed;
+        width:100%;
+        height:100%;
+        top:0;
+        left:0;
+        z-index:0;
+        overflow:hidden;
+        pointer-events:none;
+    }
+
+    .word{
+        position:absolute;
+        color:white;
+        font-weight:bold;
+        opacity:0.8;
+        animation: fall linear infinite;
+        text-shadow:0 0 10px rgba(255,255,255,0.8);
+        user-select:none;
+    }
+
+    @keyframes fall{
+        from{ transform:translateY(-10vh); }
+        to{ transform:translateY(110vh); }
+    }
+
+    /* Tarjeta central */
+    .card{
+        position:absolute;
+        top:50%;
+        left:50%;
+        transform:translate(-50%,-50%);
+        background:white;
+        padding:40px;
+        border-radius:25px;
+        box-shadow:0 15px 35px rgba(0,0,0,0.25);
+        z-index:10;
+        text-align:center;
+        width:350px;
+    }
+
+    h2{
+        color:#ff2e83;
+    }
+
+    button{
+        padding:12px 25px;
+        margin:10px;
+        border:none;
+        border-radius:25px;
+        font-size:16px;
+        cursor:pointer;
+        transition:0.3s;
+    }
+
+    #yes{
+        background:#ff2e83;
+        color:white;
+    }
+
+    #yes:hover{
+        background:#e60073;
+        transform:scale(1.1);
+    }
+
+    #no{
+        background:#ccc;
+        position:relative;
+    }
+
+    #message{
+        margin-top:15px;
+        font-size:18px;
+        font-weight:bold;
+        color:#ff2e83;
+    }
+
+</style>
+</head>
+<body>
+
+<div id="rain-container"></div>
+
+<!-- Música -->
+<audio id="music" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+    <h2>¿Quieres estar conmigo? 💖</h2>
+    <button id="yes">Sí</button>
+    <button id="no">No</button>
+    <div id="message"></div>
+</div>
+
+<script>
+
+    /* Lluvia de palabras */
+    const words = [
+        "Te amo ❤️","Mi amor 💕","Eres mi vida 💖",
+        "Contigo siempre 💘","Mi princesa 👑",
+        "Mi razón 💓","Eres perfecta 💞",
+        "Mi todo 💗","Solo tú 💝"
+    ];
+
+    const rainContainer = document.getElementById("rain-container");
+
+    function createWord(){
+        const word = document.createElement("div");
+        word.classList.add("word");
+        word.innerText = words[Math.floor(Math.random()*words.length)];
+        word.style.left = Math.random()*100 + "vw";
+        word.style.fontSize = (16 + Math.random()*25) + "px";
+        word.style.animationDuration = (4 + Math.random()*6) + "s";
+        rainContainer.appendChild(word);
+
+        setTimeout(()=>{ word.remove(); }, 10000);
+    }
+
+    setInterval(createWord, 250);
+
+    /* Botón Sí */
+    const yesBtn = document.getElementById("yes");
+    const music = document.getElementById("music");
+
+    yesBtn.addEventListener("click", function(){
+        document.getElementById("message").innerHTML =
+        "💖 Prometo cuidarte, respetarte y hacerte feliz cada día. Eres lo mejor que me ha pasado 💕✨";
+
+        music.play();  // 🔥 SOLO aquí se reproduce
+    });
+
+    /* Botón No que se mueve */
+    const noBtn = document.getElementById("no");
+    noBtn.addEventListener("mouseover", function(){
+        noBtn.style.position = "absolute";
+        noBtn.style.top = Math.random()*80 + "%";
+        noBtn.style.left = Math.random()*80 + "%";
+    });
+
+</script>
+
+</body>
+</html>
